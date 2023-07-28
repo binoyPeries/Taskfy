@@ -3,14 +3,15 @@ import { Todo } from "../model";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { MdDone } from "react-icons/md";
 import "./styles.css";
+import { Action } from "./TodoReducer";
 
 type Props = {
   todo: Todo;
   todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  dispatch: React.Dispatch<Action>;
 };
 
-export default function TodoCard({ todo, todos, setTodos }: Props) {
+export default function TodoCard({ todo, todos, dispatch }: Props) {
   const [editable, setEditable] = useState<boolean>(false);
   const [editText, setEditText] = useState<string>(todo.todo);
 
@@ -21,18 +22,18 @@ export default function TodoCard({ todo, todos, setTodos }: Props) {
     console.log("running");
   }, [editable]);
 
-  function completeTodo(id: number) {
-    setTodos(
-      todos.map((t) => (t.id === id ? { ...t, isComplete: !t.isComplete } : t))
-    );
-  }
-  function deleteTodo(id: number) {
-    setTodos(todos.filter((t) => t.id !== id));
-  }
+  // function completeTodo(id: number) {
+  //   setTodos(
+  //     todos.map((t) => (t.id === id ? { ...t, isComplete: !t.isComplete } : t))
+  //   );
+  // }
+  // function deleteTodo(id: number) {
+  //   setTodos(todos.filter((t) => t.id !== id));
+  // }
 
   function editTodo(e: React.FormEvent, id: number) {
     e.preventDefault();
-    setTodos(todos.map((t) => (t.id === id ? { ...t, todo: editText } : t)));
+    // setTodos(todos.map((t) => (t.id === id ? { ...t, todo: editText } : t)));
     setEditable(false);
   }
 
@@ -62,10 +63,16 @@ export default function TodoCard({ todo, todos, setTodos }: Props) {
         >
           <AiFillEdit />
         </span>
-        <span className="icon" onClick={() => deleteTodo(todo.id)}>
+        <span
+          className="icon"
+          onClick={() => dispatch({ type: "delete", input: todo.id })}
+        >
           <AiFillDelete />
         </span>
-        <span className="icon" onClick={() => completeTodo(todo.id)}>
+        <span
+          className="icon"
+          onClick={() => dispatch({ type: "complete", input: todo.id })}
+        >
           <MdDone />
         </span>
       </div>

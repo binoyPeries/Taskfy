@@ -1,6 +1,6 @@
 import { Todo } from "../model";
 
-type Action =
+export type Action =
   | { type: "add"; input: string }
   | { type: "delete"; input: number }
   | { type: "complete"; input: number };

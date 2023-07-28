@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import "./App.css";
 import InputField from "./components/InputField";
-import { Todo } from "./model";
 import TodoList from "./components/TodoList";
+import { TodoReducer } from "./components/TodoReducer";
 
 function App() {
   const [todo, setTodo] = useState<string>("");
-  const [todos, setTodos] = useState<Todo[]>([]);
+  // const [todos, setTodos] = useState<Todo[]>([]);
+  const [state, dispatch] = useReducer(TodoReducer, []);
 
   function addTodo(e: React.SyntheticEvent<EventTarget>) {
     e.preventDefault();
     if (todo) {
-      setTodos([...todos, { id: Date.now(), todo, isComplete: false }]);
+      dispatch({ type: "add", input: todo });
       setTodo("");
     }
   }
@@ -20,7 +21,7 @@ function App() {
     <div className="App">
       <div className="heading">Taskfy</div>
       <InputField todo={todo} setTodo={setTodo} addItem={addTodo} />
-      <TodoList todos={todos} setTodos={setTodos} />
+      <TodoList todos={state} dispatch={dispatch} />
     </div>
   );
 }

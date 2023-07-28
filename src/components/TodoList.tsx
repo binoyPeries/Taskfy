@@ -9,10 +9,20 @@ interface Props {
 
 export default function TodoList({ todos, setTodos }: Props) {
   return (
-    <div>
-      {todos.map((t) => (
-        <TodoCard todo={t} todos={todos} setTodos={setTodos} />
-      ))}
+    <div className="container">
+      <div className="todos">
+        <span>Active Task</span>
+        {todos.map((t) => (
+          <TodoCard todo={t} todos={todos} setTodos={setTodos} />
+        ))}
+      </div>
+
+      <div className="todos remove">
+        <span>Completed Task</span>
+        {todos.map((t) => (
+          <TodoCard todo={t} todos={todos} setTodos={setTodos} />
+        ))}
+      </div>
     </div>
   );
 }

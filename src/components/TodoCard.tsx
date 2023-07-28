@@ -66,7 +66,7 @@ export default function TodoCard({ todo, todos, setTodos }: Props) {
           <AiFillDelete />
         </span>
         <span className="icon" onClick={() => completeTodo(todo.id)}>
-          <MdDone />
+           <MdDone />
         </span>
       </div>
     </form>
